@@ -8,7 +8,7 @@ const nextConfig = {
   },
   experimental: {
     serverActions: {
-      allowedOrigins: ['localhost:3009', '222.237.212.154:3009']
+      allowedOrigins: ['localhost:3000', 'police-exam.vercel.app']
     }
   }
 };

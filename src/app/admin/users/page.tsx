@@ -16,6 +16,7 @@ interface User {
   approved: boolean;
   createdAt: string;
   canSelectExam: boolean;
+  approvalCode?: string;
 }
 
 interface ExamApplication {
@@ -41,6 +42,7 @@ export default function UsersPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [approvalCodes, setApprovalCodes] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -156,6 +158,25 @@ export default function UsersPage() {
     }
   };
 
+  const generateApprovalCode = async (userId: string) => {
+    try {
+      const response = await fetch(`/api/admin/users/${userId}/approval-code`, {
+        method: 'POST',
+      });
+
+      if (!response.ok) throw new Error('승인코드 생성에 실패했습니다.');
+      const data = await response.json();
+      
+      setApprovalCodes(prev => ({
+        ...prev,
+        [userId]: data.code
+      }));
+      setSuccess('승인코드가 생성되었습니다.');
+    } catch (error) {
+      setError('승인코드 생성에 실패했습니다.');
+    }
+  };
+
   if (loading) return <div className="p-4">로딩 중...</div>;
   if (error) return <div className="p-4 text-red-500">{error}</div>;
 
@@ -176,6 +197,33 @@ export default function UsersPage() {
           {success}
         </div>
       )}
+
+      <div className="bg-white rounded-lg shadow overflow-hidden mb-6">
+        <div className="p-4">
+          <h2 className="text-xl font-semibold mb-4">회원가입 승인코드 관리</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {users.map((user) => (
+              <div key={user._id} className="border rounded p-4">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-medium">{user.name}</span>
+                  <button
+                    onClick={() => generateApprovalCode(user._id)}
+                    className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600"
+                  >
+                    승인코드 생성
+                  </button>
+                </div>
+                {approvalCodes[user._id] && (
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-600">승인코드:</p>
+                    <p className="font-mono bg-gray-100 p-2 rounded">{approvalCodes[user._id]}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <table className="min-w-full divide-y divide-gray-200">
