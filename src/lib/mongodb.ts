@@ -1,36 +1,50 @@
-import { MongoClient } from 'mongodb';
+import mongoose from 'mongoose';
 
-if (!process.env.MONGODB_URI) {
-  throw new Error('MONGODB_URI가 설정되지 않았습니다.');
-}
-
-const uri = process.env.MONGODB_URI;
-const options = {};
-
-let client;
-let clientPromise: Promise<MongoClient>;
-
-if (process.env.NODE_ENV === 'development') {
-  // 개발 환경에서는 전역 변수를 사용하여 연결을 재사용
-  let globalWithMongo = global as typeof globalThis & {
-    _mongoClientPromise?: Promise<MongoClient>;
+interface MongooseGlobal {
+  mongoose?: {
+    conn: typeof mongoose | null;
+    promise: Promise<typeof mongoose> | null;
   };
+}
 
-  if (!globalWithMongo._mongoClientPromise) {
-    client = new MongoClient(uri, options);
-    globalWithMongo._mongoClientPromise = client.connect();
+const MONGODB_URI = process.env.MONGODB_URI!;
+
+if (!MONGODB_URI) {
+  throw new Error('Please define the MONGODB_URI environment variable inside .env');
+}
+
+const globalWithMongoose = global as typeof globalThis & MongooseGlobal;
+
+let cached = globalWithMongoose.mongoose;
+
+if (!cached) {
+  cached = globalWithMongoose.mongoose = { conn: null, promise: null };
+}
+
+async function connectDB() {
+  if (!cached) return;
+  if (cached.conn) {
+    return cached.conn;
   }
-  clientPromise = globalWithMongo._mongoClientPromise;
-} else {
-  // 프로덕션 환경에서는 새로운 연결 생성
-  client = new MongoClient(uri, options);
-  clientPromise = client.connect();
+
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false,
+    };
+
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      return mongoose;
+    });
+  }
+
+  try {
+    cached.conn = await cached.promise;
+  } catch (e) {
+    cached.promise = null;
+    throw e;
+  }
+
+  return cached.conn;
 }
 
-export async function connectToDatabase() {
-  const client = await clientPromise;
-  const db = client.db(process.env.MONGODB_DB || 'police-exam');
-  return { client, db };
-}
-
-export default clientPromise; 
+export default connectDB; 
