@@ -7,9 +7,10 @@
   --background-rgb: 255, 255, 255;
 }
 
-body {
+html, body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
+  min-height: 100vh;
 }
 
 /* 다크모드에서도 강제로 라이트 모드 스타일 적용 */
@@ -17,5 +18,10 @@ body {
   :root {
     --foreground-rgb: 0, 0, 0;
     --background-rgb: 255, 255, 255;
+  }
+  
+  html, body {
+    color: rgb(var(--foreground-rgb));
+    background: rgb(var(--background-rgb));
   }
 }
