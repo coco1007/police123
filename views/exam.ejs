@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>진급 시험 - 경찰청 통합 진급 사이트</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .question {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .options {
+            margin-top: 15px;
+        }
+        .option {
+            margin: 10px 0;
+        }
+        .submit-button {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>진급 시험</h1>
+        </div>
+        <form action="/result" method="POST">
+            <div class="question">
+                <h3>1. 다음 중 경찰관의 직무에 해당하지 않는 것은?</h3>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q1" value="1" required>
+                        <label>범죄의 예방과 수사</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" value="2">
+                        <label>교통의 단속과 사고처리</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" value="3">
+                        <label>시설물의 관리와 운영</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" value="4">
+                        <label>경비와 요인보호</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>2. 경찰관의 직무수행 중 발생한 손해배상에 관한 법률은?</h3>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q2" value="1" required>
+                        <label>국가배상법</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" value="2">
+                        <label>민법</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" value="3">
+                        <label>형법</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" value="4">
+                        <label>행정법</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-button">제출하기</button>
+        </form>
+    </div>
+</body>
+</html> 
