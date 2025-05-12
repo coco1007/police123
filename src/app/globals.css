@@ -8,9 +8,20 @@
 }
 
 html, body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
+  color: rgb(var(--foreground-rgb)) !important;
+  background: rgb(var(--background-rgb)) !important;
   min-height: 100vh;
+}
+
+/* 모든 텍스트 요소에 강제로 검은색 적용 */
+h1, h2, h3, h4, h5, h6, p, span, div, label, input, textarea, button {
+  color: rgb(var(--foreground-rgb)) !important;
+}
+
+/* 입력 필드 배경색 강제 적용 */
+input, textarea {
+  background-color: rgb(var(--background-rgb)) !important;
+  color: rgb(var(--foreground-rgb)) !important;
 }
 
 /* 다크모드에서도 강제로 라이트 모드 스타일 적용 */
@@ -21,7 +32,18 @@ html, body {
   }
   
   html, body {
-    color: rgb(var(--foreground-rgb));
-    background: rgb(var(--background-rgb));
+    color: rgb(var(--foreground-rgb)) !important;
+    background: rgb(var(--background-rgb)) !important;
+  }
+
+  /* 다크모드에서도 모든 텍스트 요소에 강제로 검은색 적용 */
+  h1, h2, h3, h4, h5, h6, p, span, div, label, input, textarea, button {
+    color: rgb(var(--foreground-rgb)) !important;
+  }
+
+  /* 다크모드에서도 입력 필드 배경색 강제 적용 */
+  input, textarea {
+    background-color: rgb(var(--background-rgb)) !important;
+    color: rgb(var(--foreground-rgb)) !important;
   }
 }
