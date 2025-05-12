@@ -132,8 +132,13 @@ export default function ExamPage({ params }: { params: { id: string } }) {
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-bold">{exam.title}</h1>
-          <div className="text-lg font-semibold">
+          <div className={`text-lg font-semibold px-4 py-2 rounded-lg ${
+            timeLeft <= 300 ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'
+          }`}>
             남은 시간: {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
+            {timeLeft <= 300 && (
+              <span className="ml-2 text-sm">(시간이 얼마 남지 않았습니다!)</span>
+            )}
           </div>
         </div>
         <p className="text-gray-600 mb-8">{exam.description}</p>
