@@ -59,7 +59,8 @@ export default function ExamPage({ params }: { params: { id: string } }) {
         throw new Error('시험 문제를 불러오는데 실패했습니다.');
       }
       setExam(data);
-      setTimeLeft(data.timeLimit * 60);
+      // 20분으로 고정
+      setTimeLeft(20 * 60);
       // 각 문제의 답변 필드 초기화
       const initialAnswers = data.questions.reduce((acc: { [key: string]: string }, q: any) => {
         acc[q._id] = '';

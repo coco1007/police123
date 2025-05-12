@@ -23,16 +23,28 @@ export async function POST(
       return NextResponse.json({ error: '시험을 찾을 수 없습니다.' }, { status: 404 });
     }
 
+    // 새로운 코드 생성 및 저장
     const newCode = generateCode();
     const now = new Date();
     const expiresAt = new Date(now.getTime() + 24 * 60 * 60 * 1000); // 24시간 후
 
-    exam.code = newCode;
-    exam.codeGeneratedAt = now;
-    exam.codeExpiresAt = expiresAt;
-    await exam.save();
+    const updatedExam = await Exam.findByIdAndUpdate(
+      params.id,
+      {
+        $set: {
+          code: newCode,
+          codeGeneratedAt: now,
+          codeExpiresAt: expiresAt
+        }
+      },
+      { new: true }
+    );
 
-    return NextResponse.json(exam);
+    if (!updatedExam) {
+      return NextResponse.json({ error: '시험 업데이트에 실패했습니다.' }, { status: 500 });
+    }
+
+    return NextResponse.json(updatedExam);
   } catch (error: any) {
     console.error('API ERROR:', error);
     return NextResponse.json({ error: String(error) }, { status: 500 });
