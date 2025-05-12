@@ -128,17 +128,12 @@ export default function ExamPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="min-h-screen p-8">
+    <div className="min-h-screen p-8 bg-white text-black">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold">{exam.title}</h1>
-          <div className={`text-lg font-semibold px-4 py-2 rounded-lg ${
-            timeLeft <= 300 ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'
-          }`}>
+          <h1 className="text-2xl font-bold text-black">{exam.title}</h1>
+          <div className="text-lg font-semibold text-black">
             남은 시간: {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
-            {timeLeft <= 300 && (
-              <span className="ml-2 text-sm">(시간이 얼마 남지 않았습니다!)</span>
-            )}
           </div>
         </div>
         <p className="text-gray-600 mb-8">{exam.description}</p>
@@ -170,12 +165,12 @@ export default function ExamPage({ params }: { params: { id: string } }) {
 
         <div className="space-y-8">
           {exam.questions.map((question, index) => (
-            <div key={index} className="border rounded-lg p-6">
+            <div key={index} className="border rounded-lg p-6 bg-white">
               <div className="flex justify-between items-start mb-4">
-                <h3 className="text-lg font-semibold">
+                <h3 className="text-lg font-semibold text-black">
                   {index + 1}. {question.text}
                 </h3>
-                <span className="text-sm text-gray-500">{question.points}점</span>
+                <span className="text-sm text-gray-600">{question.points}점</span>
               </div>
 
               {question.type === 'ox' && (
@@ -184,23 +179,21 @@ export default function ExamPage({ params }: { params: { id: string } }) {
                     <input
                       type="radio"
                       name={`question-${index}`}
-                      value="O"
-                      checked={answers[question._id] === 'O'}
+                      value="true"
                       onChange={(e) => handleAnswerChange(question._id, e.target.value)}
                       className="form-radio"
                     />
-                    <span>O</span>
+                    <span className="text-black">O</span>
                   </label>
                   <label className="flex items-center space-x-2">
                     <input
                       type="radio"
                       name={`question-${index}`}
-                      value="X"
-                      checked={answers[question._id] === 'X'}
+                      value="false"
                       onChange={(e) => handleAnswerChange(question._id, e.target.value)}
                       className="form-radio"
                     />
-                    <span>X</span>
+                    <span className="text-black">X</span>
                   </label>
                 </div>
               )}
@@ -213,11 +206,10 @@ export default function ExamPage({ params }: { params: { id: string } }) {
                         type="radio"
                         name={`question-${index}`}
                         value={option}
-                        checked={answers[question._id] === option}
                         onChange={(e) => handleAnswerChange(question._id, e.target.value)}
                         className="form-radio"
                       />
-                      <span>{option}</span>
+                      <span className="text-black">{option}</span>
                     </label>
                   ))}
                 </div>
@@ -227,7 +219,7 @@ export default function ExamPage({ params }: { params: { id: string } }) {
                 <textarea
                   value={answers[question._id] || ''}
                   onChange={(e) => handleAnswerChange(question._id, e.target.value)}
-                  className="w-full h-32 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full h-32 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-black"
                   placeholder="답변을 입력하세요"
                 />
               )}

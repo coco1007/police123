@@ -86,12 +86,12 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen p-8">
-      <h1 className="text-2xl font-bold mb-6">응시 가능한 시험 목록</h1>
+    <div className="min-h-screen p-8 bg-white text-black">
+      <h1 className="text-2xl font-bold mb-6 text-black">응시 가능한 시험 목록</h1>
       <div className="space-y-4">
         {exams.map((exam) => (
-          <div key={exam._id} className="border rounded-lg p-4">
-            <h2 className="text-xl font-semibold mb-2">{exam.title}</h2>
+          <div key={exam._id} className="border rounded-lg p-4 bg-white">
+            <h2 className="text-xl font-semibold mb-2 text-black">{exam.title}</h2>
             <p className="text-gray-600 mb-4">{exam.description}</p>
             <div className="flex gap-2">
               <input
@@ -99,7 +99,7 @@ export default function Home() {
                 value={examCodes[exam._id] || ''}
                 onChange={(e) => handleCodeChange(exam._id, e.target.value)}
                 placeholder="시험 코드를 입력하세요"
-                className="flex-1 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-black"
               />
               <button
                 onClick={() => verifyCode(exam._id)}
