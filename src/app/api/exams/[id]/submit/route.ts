@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Exam from '@/models/Exam';
-import Submission from '@/models/Submission';
+import ExamSubmission from '@/models/ExamSubmission';
 
 export async function POST(
   request: Request,
@@ -20,7 +20,7 @@ export async function POST(
     }
 
     // 답안 저장
-    const submission = await Submission.create({
+    const submission = await ExamSubmission.create({
       exam: exam._id,
       studentId,
       studentName,
