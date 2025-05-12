@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "update-exam": "ts-node src/scripts/updateExam.ts"
+    "update-exam": "ts-node src/scripts/updateExam.ts",
+    "update-exam-info": "ts-node src/scripts/updateExamInfo.ts"
   },
   "dependencies": {
     "dotenv": "^16.5.0",
